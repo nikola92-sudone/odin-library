@@ -1,5 +1,33 @@
 const myLibrary = [];
 
+function interface() {
+    const dialog = document.querySelector('#dialog');
+    const openButton = document.querySelector('#add-book-btn'); 
+    const closeButton = document.querySelector('#close-button');
+    const form = document.querySelector('#book-form');
+
+    openButton.addEventListener('click', () => dialog.showModal());
+    closeButton.addEventListener('click', () => dialog.close());
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        // Grab values
+        const title = document.querySelector('#title').value;
+        const author = document.querySelector('#author').value;
+        const pages = document.querySelector('#pages').value;
+        const readStatus = document.querySelector('#readStatus').checked;
+
+        // Process data
+        addBookToLibrary(title, author, pages, readStatus);
+        displayBooks();
+
+        // Reset and hide
+        form.reset();
+        dialog.close();
+    });
+}
+
 function Book(title, author, pages, readStatus) {
     this.title = title
     this.author = author
@@ -41,10 +69,5 @@ function displayBooks() {
         display.appendChild(card);})
 }
 
-// 1. Add some test data
-addBookToLibrary("The Hobbit", "J.R.R. Tolkien", 295, true);
-addBookToLibrary("1984", "George Orwell", 328, false);
-addBookToLibrary("The Great Gatsby", "F. Scott Fitzgerald", 180, true);
 
-// 2. Run the display function
-displayBooks();
+interface();
